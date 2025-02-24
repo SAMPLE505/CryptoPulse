@@ -1,29 +1,24 @@
-from os import getenv
-from sqlalchemy import create_engine, Column, String, Float, Integer, JSON, Table, ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship, declarative_base, Session
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from uvicorn import run
-
-# Настройка базы данных SQLite
-DATABASE_URL = "sqlite:///:memory:" if getenv("TEST") else "sqlite:///./crypto.db"
-
-# Настройка SQLAlchemy
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+from contextlib import asynccontextmanager
+from database import init_db
+from api.routes.auth import router as auth_router
 
 
-app = FastAPI()
 
-Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # Startup: инициализируем базу данных
+    init_db()
+    yield
+    # Shutdown: можно добавить логику завершения работы, если нужно
 
-# Функция получения 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
+app = FastAPI(lifespan=lifespan)
+
+
+# Подключаем роутер с эндпоинтами для аутентификации
+app.include_router(auth_router)
 
 
 if __name__ == "__main__":
