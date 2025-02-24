@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from uvicorn import run
 from contextlib import asynccontextmanager
-from database import init_db
-from api.routes.auth import router as auth_router
+from app.database import init_db
+from app.api.routes.auth import router as auth_router
 
 
 

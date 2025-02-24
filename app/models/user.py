@@ -2,8 +2,10 @@ from uuid import uuid4
 from datetime import datetime
 from sqlalchemy import Column, String, Boolean, DateTime
 from sqlalchemy.dialects.postgresql import UUID
-from database import Base
+from app.database import Base
 
+
+# Модель пользователя для БД
 class User(Base):
     __tablename__ = 'users'
     
