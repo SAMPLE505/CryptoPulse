@@ -3,12 +3,13 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from os import getenv
 
 
-# Адрес БД
-DATABASE_URL = "sqlite:///:memory:" if getenv("TEST") else "sqlite:///./crypto.db"
+# Подключение к БД
+#getenv("DATABASE_URL", "postgresql://postgres:password@postgres:5432/crypto_db")
+DATABASE_URL = "postgresql://postgres:password@localhost:5432/crypto_db"
 
 
 # Настройка SQLAlchemy
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
