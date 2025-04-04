@@ -17,9 +17,10 @@ async def lifespan(_: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-# Подключаем роутер с эндпоинтами для аутентификации
+# Подключение роутеров с эндпоинтами
 app.include_router(auth_router)
 
 
+# uvicorn app.main:app --reload
 if __name__ == "__main__":
     run("app.main:app", host="127.0.0.1", port=8000, reload=True)

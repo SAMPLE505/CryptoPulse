@@ -1,11 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from os import getenv
+from dotenv import load_dotenv
 
 
-# Подключение к БД
-#getenv("DATABASE_URL", "postgresql://postgres:password@postgres:5432/crypto_db")
-DATABASE_URL = "postgresql://postgres:password@localhost:5432/crypto_db"
+load_dotenv()
+
+
+# Получение адреса БД
+DATABASE_URL = getenv("DATABASE_URL")
 
 
 # Настройка SQLAlchemy
