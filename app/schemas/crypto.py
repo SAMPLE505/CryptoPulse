@@ -1,7 +1,13 @@
 from pydantic import BaseModel
+from typing import List
 
 
 # Pydantic-схема ответа с курсом валюты в USDT
-class CryptoRateResponseSchema(BaseModel):
-    coin_symbol: str
+class CryptoPriceResponseSchema(BaseModel):
+    symbol: str
     price: float
+
+
+# Pydantic-схема ответа с курсом валюты в USDT
+class CryptoListResponseSchema(BaseModel):
+    data: List

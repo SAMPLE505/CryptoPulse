@@ -25,11 +25,14 @@ def login_user(user_data: UserLoginSchema, response: Response, db: Session = Dep
     if not user or not verify_password(user_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
+    # Создание JWT-токенов
     access_token = create_access_token(data={"sub": str(user.id)})
     refresh_token = create_refresh_token(user.id)
 
+    # Сохранение Refresh-токена в Redis
     store_token(str(user.id), refresh_token)
 
+    # Установка cookie
     response.set_cookie(
         key="refresh_token",
         value=refresh_token,
