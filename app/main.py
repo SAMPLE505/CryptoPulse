@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from uvicorn import run
 from contextlib import asynccontextmanager
 from app.database import init_db
-from app.api.routes.auth import router as auth_router
+from app.api.routes.auth import auth_router
+from app.api.routes.crypto import crypto_router
 
 
 
@@ -19,6 +20,7 @@ app = FastAPI(lifespan=lifespan)
 
 # Подключение роутеров с эндпоинтами
 app.include_router(auth_router)
+app.include_router(crypto_router)
 
 
 # uvicorn app.main:app --reload

@@ -8,18 +8,18 @@ from app.services.user import add_user
 from app.core.redis import store_token
 
 
-router = APIRouter(prefix='/auth')
+auth_router = APIRouter(prefix='/auth')
 
 
 # Эндпоинт регистрации пользователя
-@router.post("/register", tags=["Аутентификация"])
+@auth_router.post("/register", tags=["Аутентификация"])
 async def register_user(user_data: UserRegistrationSchema, db: Session = Depends(get_db)):
     response = add_user(user_data=user_data, db=db)
     return {"message": "User successfully registered", "user": response.model_dump()}
 
 
-# Эндпоинт регистрации пользователя response_model=TokenSchema
-@router.post("/login", tags=["Аутентификация"])
+# Эндпоинт аутентификации и авторизации пользователя
+@auth_router.post("/login", tags=["Аутентификация"])
 def login_user(user_data: UserLoginSchema, response: Response, db: Session = Depends(get_db)) -> LoginResponseSchema:
     user = db.query(User).filter(User.email == user_data.email).first()
     if not user or not verify_password(user_data.password, user.hashed_password):
