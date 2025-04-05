@@ -19,7 +19,7 @@ async def get_coin_price(symbol: str) -> CryptoPriceResponseSchema:
         raise HTTPException(status_code=404, detail=str(e))
     
     except TimeoutException:
-        raise HTTPException(status_code=503, detail="CoinMarketCap API request timed out")
+        raise HTTPException(status_code=504, detail="CoinMarketCap API request timed out")
     
     except HTTPError as e:
         raise HTTPException(status_code=502, detail=f"API request error: {str(e)}")
@@ -34,5 +34,12 @@ async def get_coins_list() -> CryptoListResponseSchema:
     try:
         crypto_list = await get_cryptocurrency_list()
         return CryptoListResponseSchema(data=crypto_list)
+    
+    except TimeoutException:
+        raise HTTPException(status_code=504, detail="CoinMarketCap API request timed out")
+    
+    except HTTPError as e:
+        raise HTTPException(status_code=502, detail=f"API request error: {str(e)}")
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
