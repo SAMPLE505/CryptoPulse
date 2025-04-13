@@ -8,14 +8,15 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-# Выбор env-файла в зависимости от окружения
+# Подгрузка основного .env
+load_dotenv(BASE_DIR / ".env")
+
+# Получение имени окружения
 env_name = os.getenv("ENV", "dev")
 
-
+# Если тестовое — подгрузка .env.test
 if env_name == "test":
-    load_dotenv(BASE_DIR / ".env.test")
-else:
-    load_dotenv(BASE_DIR / ".env")
+    load_dotenv(BASE_DIR / ".env.test", override=True)
 
 
 class Settings(BaseSettings):

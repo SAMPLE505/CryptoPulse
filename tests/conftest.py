@@ -4,10 +4,12 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.core.settings import settings
 
 
 environ["ENV"] = 'test'
+
+
+from app.core.settings import settings
 from app.main import app
 from app.database import Base, get_db
 
