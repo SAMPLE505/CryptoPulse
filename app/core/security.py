@@ -2,16 +2,12 @@ import uuid
 import jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from os import getenv
-from dotenv import load_dotenv
+from app.core.settings import settings
 
 
-load_dotenv()
-
-
-SECRET_KEY = getenv("SECRET_KEY")
-ALGORITHM = getenv("ALGORITHM", "HS256")
-ACCESS_TOKEN_TTL_MINUTES = int(getenv("ACCESS_TOKEN_TTL_MINUTES"))
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_TTL_MINUTES = settings.ACCESS_TOKEN_TTL_MINUTES
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -1,14 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from os import getenv
-from dotenv import load_dotenv
-
-
-load_dotenv()
+from app.core.settings import settings
 
 
 # Получение адреса БД
-DATABASE_URL = getenv("DATABASE_URL")
+DATABASE_URL = settings.DATABASE_URL
 
 
 # Настройка SQLAlchemy

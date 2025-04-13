@@ -1,18 +1,19 @@
 import redis
-from dotenv import load_dotenv
-from os import getenv
 from datetime import timedelta
 from typing import List
 import json
+from app.core.settings import settings
 
 
-load_dotenv()
+REFRESH_TOKEN_TTL_DAYS = settings.REFRESH_TOKEN_TTL_DAYS
+CRYPTO_PRICE_TTL_SECONDS = settings.CRYPTO_PRICE_TTL_SECONDS
+CRYPTO_LIST_TTL_MINUTES = settings.CRYPTO_LIST_TTL_MINUTES
+REDIS_HOST = settings.REDIS_HOST
+REDIS_PORT = settings.REDIS_PORT
+REDIS_DB = settings.REDIS_DB
 
-REFRESH_TOKEN_TTL_DAYS = int(getenv("REFRESH_TOKEN_TTL_DAYS"))
-CRYPTO_PRICE_TTL_SECONDS = int(getenv("CRYPTO_PRICE_TTL_SECONDS"))
-CRYPTO_LIST_TTL_MINUTES = int(getenv("CRYPTO_LIST_TTL_MINUTES"))
 
-redis_client = redis.Redis(host="localhost", port=6379, db=0, decode_responses=True)
+redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
 
 
 # Сохранение refresh-токена JWT

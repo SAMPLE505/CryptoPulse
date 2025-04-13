@@ -1,16 +1,11 @@
 from httpx import AsyncClient, TimeoutException, HTTPError
-from dotenv import load_dotenv
-from os import getenv
+from app.core.settings import settings
 from app.core.redis import get_crypto_price, store_crypto_price, get_crypto_list, store_crypto_list
 from app.exceptions import CoinSymbolNotFound
 
 
-# Загрузка .env файла
-load_dotenv()
-
-
 # Загрузка ключа API CoinMarketCap
-API_KEY = getenv("API_KEY")
+API_KEY = settings.API_KEY
 
 
 # Функция получения цены криптовалюты в USD с API CoinMarketCap

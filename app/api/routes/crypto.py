@@ -4,7 +4,9 @@ from app.services.crypto_service import get_cryptocurrency_price, get_cryptocurr
 from app.exceptions import CoinSymbolNotFound
 from httpx import TimeoutException, HTTPError
 
+
 crypto_router = APIRouter(prefix='/crypto')
+
 
 # Эндпоинт получение курса выбранной монеты
 @crypto_router.get("/price", tags=["Криптовалюта"])

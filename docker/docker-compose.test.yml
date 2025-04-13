@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  test-db:
+    image: postgres:16
+    container_name: crypto_test_db
+    restart: unless-stopped
+    ports:
+      - "5433:5432"  # Отличается от прод
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: test_db
+    volumes:
+      - test_pgdata:/var/lib/postgresql/data
+
+  test-redis:
+    image: redis:7
+    container_name: crypto_test_redis
+    restart: unless-stopped
+    ports:
+      - "6380:6379"  # Отличается от прод
+    volumes:
+      - test_redisdata:/data
+
+volumes:
+  test_pgdata:
+  test_redisdata:

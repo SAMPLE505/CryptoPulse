@@ -8,7 +8,7 @@ def test_register_user(test_client):
     user_data = {
         "email": "test@example.com",
         "password": "securepassword",
-        "full_name": "Test User"
+        "username": "Test User"
     }
     
     # Тест на стандартное поведение эндпоинта
@@ -17,7 +17,7 @@ def test_register_user(test_client):
     response_data = response.json()
     assert response_data["message"] == "User successfully registered"
     assert response_data["user"]["email"] == user_data["email"]
-    assert response_data["user"]["full_name"] == user_data["full_name"]
+    assert response_data["user"]["username"] == user_data["username"]
     assert "id" in response_data["user"]
 
     # Тест случая, когда пользователь уже существует

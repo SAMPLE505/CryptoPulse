@@ -4,15 +4,20 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+from app.core.settings import settings
 
-environ["TEST"] = '1'
+
+environ["ENV"] = 'test'
 from app.main import app
 from app.database import Base, get_db
 
 
-TEST_DATABASE_URL = "sqlite:///:memory:"
-engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False}, poolclass=StaticPool)
+# Используется тестовая БД PostgreSQL
+TEST_DATABASE_URL = settings.DATABASE_URL
+
+
+# Создание движка БД
+engine = create_engine(TEST_DATABASE_URL)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
@@ -21,10 +26,12 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 def test_db():
     Base.metadata.create_all(bind=engine)
     db = TestingSessionLocal()
-    yield db
-    db.close()
-    Base.metadata.drop_all(bind=engine)
-    engine.dispose()
+    try:
+        yield db
+    finally:
+        db.close()
+        Base.metadata.drop_all(bind=engine)
+        engine.dispose()
 
 
 # Фикстура для замены БД на тестовую и создания тестового клиента
