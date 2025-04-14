@@ -21,6 +21,7 @@ def test_user_registration_success(test_client):
 
 # Тест регистрации существующего пользователя
 def test_user_registration_existing_user(test_client):
+    
     user_registration_data = {
         "email": "test@example.com",
         "password": "securepassword",

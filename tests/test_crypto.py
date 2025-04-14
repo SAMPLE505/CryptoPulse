@@ -1,21 +1,24 @@
-"""
 from tests.conftest import test_client
 
-# Тест на регистрацию пользователя
-def test_get_coin_price(test_client):
+# Тест успешного получения цены валюты
+def test_get_coin_price_success(test_client):
 
-    # Тест на стандартное поведение эндпоинта
-    response = test_client.get("/crypto/price", params={"BTC"})
+    response = test_client.get("/crypto/price", params={"symbol": "BTC"})
     assert response.status_code == 200
-    
-    assert response_data["message"] == "User successfully registered"
-    assert response_data["user"]["email"] == user_data["email"]
-    assert response_data["user"]["full_name"] == user_data["full_name"]
-    assert "id" in response_data["user"]
+    assert "price" in response.json()
 
-    # Тест случая, когда пользователь уже существует
-    response = test_client.post("/auth/register", json=user_data)
-    assert response.status_code == 400
-    response_data = response.json()
-    assert response_data["detail"] == "User already exists"
-"""
+
+# Тест получения цены несуществующей валюты
+def test_get_coin_price_invalid(test_client):
+
+    response = test_client.get("/crypto/price", params={"symbol": "SOMERANDOMCOIN"})
+    assert response.status_code == 404
+    assert "detail" in response.json()
+
+
+# Тест успешного получения списка валют
+def test_get_coins_list_success(test_client):
+
+    response = test_client.get("/crypto/list")
+    assert response.status_code == 200
+    assert "data" in response.json()
