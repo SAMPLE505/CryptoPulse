@@ -61,12 +61,12 @@ ACCESS_TOKEN_TTL_MINUTES = 30
 REFRESH_TOKEN_TTL_DAYS = 30
 
 # База данных
-DATABASE_URL = "postgresql://test_user:test_password@localhost:5433/test_db"
+DATABASE_URL = "postgresql://test_user:test_password@localhost:5432/test_db"
 
 # Redis
 REDIS_HOST = "localhost"
 REDIS_DB = 0
-REDIS_PORT = 6380
+REDIS_PORT = 6379
 
 # Ключ API CoinMarketCap
 API_KEY = "YOUR CoinMarketCapKey"
@@ -79,6 +79,13 @@ CRYPTO_LIST_TTL_MINUTES = 60
 ---
 
 ## 🧪 Тестирование
+
+Перед тестированием создайте в корне проекта файл `.env.test` аналогичный `.env` за исключением следующих изменённых строк:
+
+```
+DATABASE_URL = "postgresql://test_user:test_password@localhost:5432/test_db"
+REDIS_PORT = 6380
+```
 
 Для запуска тестовой среды используйте:
 
