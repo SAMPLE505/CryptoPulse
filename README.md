@@ -83,7 +83,7 @@ CRYPTO_LIST_TTL_MINUTES = 60
 Перед тестированием создайте в корне проекта файл `.env.test` аналогичный `.env` за исключением следующих изменённых строк:
 
 ```
-DATABASE_URL = "postgresql://test_user:test_password@localhost:5432/test_db"
+DATABASE_URL = "postgresql://test_user:test_password@localhost:5433/test_db"
 REDIS_PORT = 6380
 ```
 
@@ -113,7 +113,8 @@ pytest
 ```json
 {
   "email": "user@example.com",
-  "password": "yourpassword"
+  "password": "yourpassword",
+  "username": "username"
 }
 ```
 
@@ -123,7 +124,8 @@ pytest
   "message": "User successfully registered",
   "user": {
     "id": 1,
-    "email": "user@example.com"
+    "email": "user@example.com",
+    "username": "username"
   }
 }
 ```
@@ -239,7 +241,7 @@ app/
 
 ## 📦 TODO
 
-- Отслеживание курса валют с помощью подписок
+- Отслеживание изменений курса валют
 - Обновление access-токена по refresh-токену
 - Защита роутов авторизацией
 - Тесты для Redis и токенов
