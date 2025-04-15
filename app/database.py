@@ -16,8 +16,7 @@ Base = declarative_base()
 # Инициализация БД
 def init_db():
     from app.models.user import User
-    #from models.subscription import Subscription
-    #from models.cryptocurrency import Cryptocurrency
+    from app.models.subscription import Subscription
     #from models.alert import Alert
     Base.metadata.create_all(bind=engine)
 

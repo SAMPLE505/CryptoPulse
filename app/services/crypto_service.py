@@ -15,7 +15,6 @@ async def get_cryptocurrency_price(symbol: str):
     cached = get_crypto_price(symbol)
     if cached is not None:
         return cached
-    
     try:
         # Запрос к API
         async with AsyncClient(timeout=10) as client:

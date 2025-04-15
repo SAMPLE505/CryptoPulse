@@ -2,10 +2,11 @@ from uuid import uuid4
 from datetime import datetime
 from sqlalchemy import Column, String, Boolean, DateTime
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 
-# Модель пользователя для БД
+# Модель пользователя
 class User(Base):
     __tablename__ = 'users'
     
@@ -16,3 +17,5 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    subscriptions = relationship("Subscription", back_populates="user", cascade="all, delete-orphan")
