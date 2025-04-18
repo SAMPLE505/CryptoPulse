@@ -2,7 +2,9 @@ import uuid
 import jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
+from sqlalchemy.orm import Session
 from app.core.settings import settings
+from app.models.user import User
 
 
 SECRET_KEY = settings.SECRET_KEY
@@ -21,6 +23,16 @@ def get_password_hash(password: str) -> str:
 # Функция проверки пароля
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
+
+
+# Функция аутентификации пользователя
+def authenticate_user(username: str, password: str, db: Session):
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        return None
+    if not verify_password(password, user.hashed_password):
+        return None
+    return user
 
 
 # Создание Access-токена

@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from app.database import init_db
 from app.api.routes.auth import auth_router
 from app.api.routes.crypto import crypto_router
+from app.api.routes.subscriptions import subscriptions_router
 from app.services.background_tasks import update_crypto_list, monitor_subscritptions
 from asyncio import create_task
 
@@ -24,6 +25,7 @@ app = FastAPI(lifespan=lifespan)
 # Подключение роутеров с эндпоинтами
 app.include_router(auth_router)
 app.include_router(crypto_router)
+app.include_router(subscriptions_router)
 
 
 # uvicorn app.main:app --reload

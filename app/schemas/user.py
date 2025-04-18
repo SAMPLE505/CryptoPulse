@@ -23,6 +23,6 @@ class RegistrationResponseSchema(BaseModel):
 
 # Pydantic-схема ответа об успешной авторизации пользователя
 class LoginResponseSchema(BaseModel):
-    access: str
+    access_token: str
     token_type: str
     expires_in: int

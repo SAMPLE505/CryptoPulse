@@ -16,5 +16,7 @@ class Subscription(Base):
     threshold = Column(Float, nullable=True)  # Пороговое значение
     above = Column(Boolean, default=True)  # True: алерт при превышении порога, False: при падении ниже
     created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    is_active = Column(Boolean, default=True)
 
     user = relationship("User", back_populates="subscriptions")
