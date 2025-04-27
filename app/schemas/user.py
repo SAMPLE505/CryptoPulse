@@ -21,6 +21,7 @@ class RegistrationResponseSchema(BaseModel):
     email: EmailStr
     username: str = None
 
+
 # Pydantic-схема ответа об успешной авторизации пользователя
 class LoginResponseSchema(BaseModel):
     access_token: str

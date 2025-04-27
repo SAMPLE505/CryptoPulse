@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from uuid import uuid4
 from app.models.user import User
 from app.schemas.user import UserRegistrationSchema, RegistrationResponseSchema
 from app.core.security import get_password_hash
@@ -16,7 +15,6 @@ def add_user(user_data: UserRegistrationSchema, db: Session) -> RegistrationResp
 
     # Создание объекта пользователя
     new_user = User(
-        id=uuid4(),
         email=user_data.email,
         hashed_password=get_password_hash(user_data.password),
         username=user_data.username
