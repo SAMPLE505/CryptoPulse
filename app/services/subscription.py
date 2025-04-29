@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from app.models.subscription import Subscription
 from app.schemas.subscription import SubscriptionUpdateSchema
@@ -25,10 +26,15 @@ def get_user_subscriptions(user_id: UUID, db: Session) -> list[Subscription]:
 
 # Функция получения выбранной подписки пользователя
 def get_user_subscription(subscription_id: UUID, user_id: UUID, db: Session) -> Subscription:
-    return db.query(Subscription).filter(
+    subscription = db.query(Subscription).filter(
         Subscription.id == subscription_id,
         Subscription.user_id == user_id
     ).first()
+
+    if not subscription:
+        raise HTTPException(status_code=404, detail="Subscription not found")
+    
+    return subscription
 
 
 # Функция обновления подписки
